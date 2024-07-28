@@ -11,5 +11,6 @@ func ApiRoutes(r *gin.Engine) {
 	{
 		api.GET("/ping", controllers.PingPong)
 		api.POST("/messages", controllers.CreateMessage)
+		api.GET("/stats", controllers.GetStats)
 	}
 }

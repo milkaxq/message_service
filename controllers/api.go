@@ -31,3 +31,13 @@ func CreateMessage(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{"id": messageID})
 }
+
+func GetStats(c *gin.Context) {
+	processedMessages, err := service.GetStats()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"count": processedMessages})
+}
