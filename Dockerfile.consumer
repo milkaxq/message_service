@@ -7,16 +7,14 @@ COPY go.mod go.sum ./
 RUN go mod tidy
 
 COPY . .
-RUN go build -o api_service main.go
+RUN go build -o consumer_service ./consumer/main.go
 
 # Final stage
 FROM alpine:latest  
 
 WORKDIR /app
 
-COPY --from=builder /app/api_service .
+COPY --from=builder /app/consumer_service .
 COPY .env .env
 
-EXPOSE 8080
-
-CMD [ "./api_service" ]
+CMD [ "./consumer_service" ]

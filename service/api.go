@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"log"
 	"message_service/configs"
 	"message_service/models"
@@ -21,7 +22,7 @@ func CreateMessage(content string) (string, error) {
 		return "", err
 	}
 
-	_, err := configs.Kafka.WriteMessages(
+	err := configs.KafkaWriter.WriteMessages(context.Background(),
 		kafka.Message{
 			Key:   []byte(message.ID),
 			Value: []byte(message.Content),

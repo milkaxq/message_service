@@ -30,14 +30,12 @@ func InitDB() {
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetConnMaxLifetime(0)
 
-	migrate(db)
-
 	DB = db
 
 	log.Println("Database connection established successfully")
 }
 
-func migrate(db *gorm.DB) {
+func Migrate(db *gorm.DB) {
 	if err := db.AutoMigrate(&models.Message{}); err != nil {
 		log.Fatalf("Error on migration to database %v", err)
 	}

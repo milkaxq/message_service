@@ -46,6 +46,18 @@ services:
     networks:
       - app-tier
 
+  consumer_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.consumer
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - app-tier
+
 networks:
   app-tier:
     driver: bridge

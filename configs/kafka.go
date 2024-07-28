@@ -1,19 +1,26 @@
 package configs
 
 import (
-	"context"
-	"log"
-
 	"github.com/segmentio/kafka-go"
 )
 
-var Kafka *kafka.Conn
+var KafkaWriter *kafka.Writer
+var KafkaReader *kafka.Reader
 
-func InitKafka() {
-	conn, err := kafka.DialLeader(context.Background(), "tcp", "kafka:9092", "messages", 0)
-	if err != nil {
-		log.Fatal("failed to dial leader:", err)
+func InitKafkaWriter() {
+	KafkaWriter = &kafka.Writer{
+		Addr:     kafka.TCP("kafka:9092"),
+		Topic:    "messages",
+		Balancer: &kafka.LeastBytes{},
 	}
+}
 
-	Kafka = conn
+func InitKafkaReader() {
+	KafkaReader = kafka.NewReader(kafka.ReaderConfig{
+		Brokers:  []string{"kafka:9092"},
+		Topic:    "messages",
+		GroupID:  "message-group",
+		MinBytes: 1e3,
+		MaxBytes: 10e6,
+	})
 }

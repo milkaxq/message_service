@@ -14,11 +14,12 @@ func init() {
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
+	configs.InitDB()
+	configs.Migrate(configs.DB)
+	configs.InitKafkaWriter()
 }
 
 func main() {
-	configs.InitDB()
-	configs.InitKafka()
 	r := gin.Default()
 
 	routes.ApiRoutes(r)
