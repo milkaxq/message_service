@@ -1,17 +1,26 @@
 package main
 
 import (
-	"net/http"
+	"log"
+	"message_service/configs"
+	"message_service/routes"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
+
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
+	configs.InitDB()
+}
 
 func main() {
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+
+	routes.ApiRoutes(r)
+
 	r.Run()
 }

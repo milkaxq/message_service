@@ -8,7 +8,7 @@ RUN go mod tidy
 
 COPY . .
 
-RUN go build -o api_service .
+RUN go build -o api_service main.go
 
 EXPOSE 8080
 
