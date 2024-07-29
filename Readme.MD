@@ -37,3 +37,5 @@ docker-compose up --build
 ```
 
 # Api Endpoints u can find in Api folder
+
+**Consider to change base url**
