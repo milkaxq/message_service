@@ -4,10 +4,11 @@ FROM golang:1.22-alpine as builder
 WORKDIR /app
 
 COPY go.mod go.sum ./
-RUN go mod tidy
+RUN --mount=type=cache,target=/go/pkg/mod/
+RUN go mod download -x
 
 COPY . .
-RUN go build -o consumer_service ./consumer/main.go
+RUN --mount=type=cache,target=/go/pkg/mod/ go build -o consumer_service ./consumer/main.go
 
 # Final stage
 FROM alpine:latest  

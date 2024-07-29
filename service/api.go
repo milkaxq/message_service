@@ -30,7 +30,7 @@ func CreateMessage(content string) (string, error) {
 	)
 
 	if err != nil {
-		log.Printf("Error in sending message to kafka %v", err)
+		log.Printf("Error in sending message to kafka: %v", err)
 		return "", err
 	}
 
